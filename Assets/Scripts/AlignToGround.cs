@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AlignToGround : MonoBehaviour {
     public LayerMask lm;
+    [SerializeField]
+    private float heightOffset;
     void LateUpdate()
     {
         //make platform adjust terrain rotation
@@ -17,7 +19,7 @@ public class AlignToGround : MonoBehaviour {
             var GroundDis = hit.distance;
             //with this you rotate object to adjust with terrain
             transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-            transform.position = hit.point;
+            transform.position = hit.point + new Vector3(0f, heightOffset, 0f);
             
         }
     }

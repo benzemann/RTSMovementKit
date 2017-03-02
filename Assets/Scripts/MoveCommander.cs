@@ -20,8 +20,21 @@ public class MoveCommander : MonoBehaviour {
                 {
                     // Tell the agent to move to the position
                     GetComponent<AgentController>().GoToPos(hit.point);
-                } else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+
+                    if (GetComponent<EnemyPursuer>() != null)
+                        GetComponent<EnemyPursuer>().ClearTarget();
+
+                    if (GetComponent<TargetFinder>() != null)
+                        GetComponent<TargetFinder>().Target = null;
+
+                } else if (hit.transform.gameObject.tag == "Enemy")
                 {
+                    if (GetComponent<EnemyPursuer>() != null)
+                        GetComponent<EnemyPursuer>().ClearTarget();
+                    if (GetComponent<TargetFinder>() != null)
+                        GetComponent<TargetFinder>().Target = null;
+                    GetComponent<TargetFinder>().Target = hit.transform.gameObject;
+
 
                 }
             }

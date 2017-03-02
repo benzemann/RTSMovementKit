@@ -52,6 +52,8 @@ public class AgentController : MonoBehaviour
     public float PushRadius { get { return pushRadius; } }
     public bool ApplyPushingForces { get { return applyPushingForce; } }
     public bool TargetReached { get { return targetReached; } }
+    public bool IsMoving { get { return (velocity.magnitude != 0); } }
+    public bool IsSearchingForPath { get; set; }
     #endregion
 
     // Use this for initialization
@@ -60,6 +62,7 @@ public class AgentController : MonoBehaviour
         // Add this to the agent manager
         AgentManager.Instance.AddAgent(this);
         path = new NavMeshPath();
+        IsSearchingForPath = false;
     }
 
 
@@ -77,6 +80,7 @@ public class AgentController : MonoBehaviour
     {
         Stop();
         targetPos = tp;
+        IsSearchingForPath = true;
         StartCoroutine(TryToSearchPath());
     }
 
@@ -84,11 +88,12 @@ public class AgentController : MonoBehaviour
     {
         while (true)
         {
-            if (NavMesh.CalculatePath(this.transform.position, targetPos, NavMesh.AllAreas, path))
+            Vector3[] newPath;
+            if (PathCalculator.Instance.CalculatePath(this.transform.position, targetPos, out newPath))
             {
                 targetReached = false;
-                vPath = path.corners;
-                Debug.Log("Calculated new path " + vPath.Length);
+                IsSearchingForPath = false;
+                vPath = newPath;
                 yield break;
             }
             yield return new WaitForSeconds(repathRate);
@@ -100,7 +105,6 @@ public class AgentController : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             var p = (this.transform.position - other.transform.position).normalized * 0.025f;
-            
             p = new Vector3(p.x, 0.0f, p.z);
             transform.position += p;
             cannotBePushed = true;
@@ -172,7 +176,7 @@ public class AgentController : MonoBehaviour
     /// </summary>
     public void CalculateVelocity()
     {
-        if (targetReached)
+        if (targetReached || vPath == null)
         {
             velocity = Vector3.zero;
             return;
@@ -244,6 +248,8 @@ public class AgentController : MonoBehaviour
     /// </summary>
     public void Stop()
     {
+        vPath = null;
+        velocity = Vector3.zero;
         currentWaypoint = 0;
         targetReached = true;
         targetDistanceMultiplier = 1;

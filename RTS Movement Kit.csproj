@@ -79,9 +79,16 @@
     <Compile Include="Assets\Scripts\AgentController2.cs" />
     <Compile Include="Assets\Scripts\AgentManager.cs" />
     <Compile Include="Assets\Scripts\AlignToGround.cs" />
+    <Compile Include="Assets\Scripts\Bullet.cs" />
+    <Compile Include="Assets\Scripts\BulletShooter.cs" />
     <Compile Include="Assets\Scripts\CameraControls.cs" />
     <Compile Include="Assets\Scripts\CameraRTS.cs" />
+    <Compile Include="Assets\Scripts\Destructable.cs" />
+    <Compile Include="Assets\Scripts\EnemyPursuer.cs" />
+    <Compile Include="Assets\Scripts\Health.cs" />
     <Compile Include="Assets\Scripts\MoveCommander.cs" />
+    <Compile Include="Assets\Scripts\ObjectPool.cs" />
+    <Compile Include="Assets\Scripts\PathCalculator.cs" />
     <Compile Include="Assets\Scripts\RectangleSelector.cs" />
     <Compile Include="Assets\Scripts\Selectable.cs" />
     <Compile Include="Assets\Scripts\SelectableManager.cs" />

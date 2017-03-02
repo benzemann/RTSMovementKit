@@ -10,7 +10,8 @@ public class TargetFinder : MonoBehaviour {
     private float searchRadius;
     [SerializeField, Tooltip("Whether it should always look for enemies. If false, some other scripts must use this component.")]
     private bool alwaysSearch;
-    
+
+
     private GameObject _currentTarget;
 
     private bool hasSearchedInThisFrame;
@@ -18,15 +19,17 @@ public class TargetFinder : MonoBehaviour {
     public GameObject Target {
         get
         {
-            if (_currentTarget == null && !hasSearchedInThisFrame)
-                FindTarget();
             return _currentTarget;
+        }
+        set
+        {
+            _currentTarget = value;
         }
     }
 
     public void Update()
     {
-        if (alwaysSearch && _currentTarget == null && !hasSearchedInThisFrame)
+        if ((alwaysSearch || (GetComponent<AgentController>() != null ? (!GetComponent<AgentController>().IsSearchingForPath && GetComponent<AgentController>().TargetReached) : false) ) && _currentTarget == null && !hasSearchedInThisFrame)
         {
             FindTarget();
         }
@@ -40,7 +43,7 @@ public class TargetFinder : MonoBehaviour {
     /// <summary>
     /// Find the closest target
     /// </summary>
-    private void FindTarget()
+    public void FindTarget()
     {
         hasSearchedInThisFrame = true;
         // Get all potential targets
@@ -53,9 +56,20 @@ public class TargetFinder : MonoBehaviour {
             float distance = Vector3.Distance(this.transform.position, potentialTargets[i].transform.position);
             if(distance < closestDistance && distance <= searchRadius)
             {
-                _currentTarget = potentialTargets[i];
-                closestDistance = distance;
-            }
+
+                RaycastHit hit;
+                var dir = (potentialTargets[i].transform.position - transform.position).normalized;
+                Ray ray = new Ray(this.transform.position, dir);
+                var layerMask = ~(1 << this.gameObject.layer);
+                if (Physics.Raycast(ray, out hit, 1000f, layerMask))
+                {
+                    if(hit.transform.gameObject == potentialTargets[i])
+                    {
+                        _currentTarget = potentialTargets[i];
+                        closestDistance = distance;
+                    }
+                } 
+            } 
         }
     }
 

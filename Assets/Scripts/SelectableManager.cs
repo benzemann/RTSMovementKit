@@ -41,6 +41,12 @@ public class SelectableManager : Singleton<SelectableManager> {
         selectables.Add(s);
     }
 
+    public void RemoveSelectable(Selectable s)
+    {
+        if (selectables.Contains(s))
+            selectables.Remove(s);
+    }
+
     /// <summary>
     /// Get the selected object. This assumes that there is only one selected object!
     /// </summary>

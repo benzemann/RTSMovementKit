@@ -55,4 +55,9 @@ public class Selectable : MonoBehaviour {
         SelectableManager.Instance.SelectObject(this);
     }
 
+    private void OnDestroy()
+    {
+        SelectableManager.Instance.RemoveSelectable(this);
+    }
+
 }
