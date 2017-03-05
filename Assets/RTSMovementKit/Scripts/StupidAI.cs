@@ -5,7 +5,7 @@ using UnityEngine;
 public class StupidAI : MonoBehaviour {
     [SerializeField, Tooltip("The stupid AI will every 30 seconds tell all idle units to attack this object")]
     private GameObject objectiveTarget;
-    private float timeAtLastCommand;
+    private float timeAtLastCommand = -50.0f;
 	
 	// Update is called once per frame
 	void Update () {

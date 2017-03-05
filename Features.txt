@@ -1,0 +1,11 @@
+RTS MOVEMENT KIT
+---------------------------
+Features
+---------------------------
+
+- RTS like movement system
+- Single selection and rectangle selection
+- Shooting, health, and damage system
+- RTS camera controls
+- Component based approach makes it easy to customize
+- Works with Units Navigation system

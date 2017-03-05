@@ -75,33 +75,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AgentController.cs" />
-    <Compile Include="Assets\Scripts\AgentSpawner.cs" />
-    <Compile Include="Assets\Scripts\AlignToGround.cs" />
-    <Compile Include="Assets\Scripts\Bullet.cs" />
-    <Compile Include="Assets\Scripts\BulletDamager.cs" />
-    <Compile Include="Assets\Scripts\CameraControls.cs" />
-    <Compile Include="Assets\Scripts\CameraRTS.cs" />
-    <Compile Include="Assets\Scripts\Damager.cs" />
-    <Compile Include="Assets\Scripts\Destructable.cs" />
-    <Compile Include="Assets\Scripts\Health.cs" />
-    <Compile Include="Assets\Scripts\Managers\AgentManager.cs" />
-    <Compile Include="Assets\Scripts\Managers\SelectableManager.cs" />
-    <Compile Include="Assets\Scripts\Managers\TeamManager.cs" />
-    <Compile Include="Assets\Scripts\MoveCommander.cs" />
-    <Compile Include="Assets\Scripts\ObjectPool.cs" />
-    <Compile Include="Assets\Scripts\PathCalculator.cs" />
-    <Compile Include="Assets\Scripts\RectangleSelector.cs" />
-    <Compile Include="Assets\Scripts\Selectable.cs" />
-    <Compile Include="Assets\Scripts\Singleton.cs" />
-    <Compile Include="Assets\Scripts\StupidAI.cs" />
-    <Compile Include="Assets\Scripts\TargetFinder.cs" />
-    <Compile Include="Assets\Scripts\TargetPursuer.cs" />
-    <Compile Include="Assets\Scripts\Team.cs" />
-    <Compile Include="Assets\Scripts\Vision.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\AgentController.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\AgentSpawner.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\AlignToGround.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\Bullet.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\BulletDamager.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\CameraRTS.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\Damager.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\Destructable.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\Health.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\Managers\AgentManager.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\Managers\SelectableManager.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\Managers\TeamManager.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\MoveCommander.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\ObjectPool.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\PathCalculator.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\RectangleSelector.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\Selectable.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\Singleton.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\StupidAI.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\TargetFinder.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\TargetPursuer.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\Team.cs" />
+    <Compile Include="Assets\RTSMovementKit\Scripts\Vision.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Shaders\ProjectorShader.shader" />
+    <None Include="Assets\RTSMovementKit\Shaders\ProjectorShader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
