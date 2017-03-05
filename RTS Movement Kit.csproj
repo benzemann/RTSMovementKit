@@ -94,6 +94,8 @@
     <Compile Include="Assets\Scripts\SelectableManager.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\Scripts\TargetFinder.cs" />
+    <Compile Include="Assets\Scripts\Team.cs" />
+    <Compile Include="Assets\Scripts\TeamManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\ProjectorShader.shader" />

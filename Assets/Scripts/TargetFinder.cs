@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 public class TargetFinder : MonoBehaviour {
-
+    [SerializeField, Tooltip("You can search for potential targets using the custom team mechanics."+
+        "Just leave target tag empty and set this to the target team, then it will search for all targets"+
+        "assigned to a team using the team component. This is more perfomance friendly than using the targetTag.")]
+    private Teams targetTeam;
     [SerializeField, Tooltip("The tag of the target.")]
     private string targetTag;
     [SerializeField, Tooltip("The radius it will look for enemies.")]
@@ -47,7 +50,15 @@ public class TargetFinder : MonoBehaviour {
     {
         hasSearchedInThisFrame = true;
         // Get all potential targets
-        GameObject[] potentialTargets = GameObject.FindGameObjectsWithTag(targetTag);
+        GameObject[] potentialTargets;
+
+        if(targetTag != "")
+        {
+            potentialTargets = GameObject.FindGameObjectsWithTag(targetTag);
+        } else
+        {
+            potentialTargets = TeamManager.Instance.GetAllObjectsInTeam(targetTeam);
+        }
         
         // Find the closest target
         float closestDistance = float.MaxValue;
