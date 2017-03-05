@@ -4,6 +4,15 @@ using UnityEngine;
 
 [RequireComponent(typeof(Selectable)), RequireComponent(typeof(AgentController))]
 public class MoveCommander : MonoBehaviour {
+    [SerializeField, Tooltip("You can either use the Teams to define enemies or tag." 
+        +"Leave tag empty to use teams. If you use teams, "
+        +"all with the team component and set to this team will be considered an enemy")]
+    private Teams enemyTeam;
+    [SerializeField, Tooltip("You can either use the Teams to define enemies or tag."
+    + "Leave tag empty to use teams. If you use teams, "
+    + "all with the team component and set to this team will be considered an enemy")]
+    private string enemyTag;
+
     // Update is called once per frame
     void Update () {
         // Check for mouse down and if the gameobject is selected
@@ -17,18 +26,18 @@ public class MoveCommander : MonoBehaviour {
                 {
                     // Tell the agent to move to the position
                     GetComponent<AgentController>().GoToPos(hit.point);
-
+                    // Clear target
                     if (GetComponent<TargetFinder>() != null)
                         GetComponent<TargetFinder>().Target = null;
 
-                } else if (hit.transform.gameObject.tag == "Enemy")
+                } else if (GetComponent<TargetFinder>() != null & 
+                    ((enemyTag != "" && hit.transform.gameObject.tag == enemyTag) ||
+                    (hit.transform.gameObject.GetComponent<Team>() != null &&
+                    hit.transform.gameObject.GetComponent<Team>().GetTeam == enemyTeam)))
                 {
-
-                    if (GetComponent<TargetFinder>() != null)
-                        GetComponent<TargetFinder>().Target = null;
+                    GetComponent<AgentController>().Stop();
+                    // Set new target
                     GetComponent<TargetFinder>().Target = hit.transform.gameObject;
-
-
                 }
             }
         }

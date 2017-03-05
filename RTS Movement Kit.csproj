@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -78,10 +76,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\AgentController.cs" />
+    <Compile Include="Assets\Scripts\AgentSpawner.cs" />
     <Compile Include="Assets\Scripts\AlignToGround.cs" />
     <Compile Include="Assets\Scripts\Bullet.cs" />
     <Compile Include="Assets\Scripts\BulletDamager.cs" />
-    <Compile Include="Assets\Scripts\BulletShooter.cs" />
     <Compile Include="Assets\Scripts\CameraControls.cs" />
     <Compile Include="Assets\Scripts\CameraRTS.cs" />
     <Compile Include="Assets\Scripts\Damager.cs" />
@@ -96,6 +94,7 @@
     <Compile Include="Assets\Scripts\RectangleSelector.cs" />
     <Compile Include="Assets\Scripts\Selectable.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
+    <Compile Include="Assets\Scripts\StupidAI.cs" />
     <Compile Include="Assets\Scripts\TargetFinder.cs" />
     <Compile Include="Assets\Scripts\TargetPursuer.cs" />
     <Compile Include="Assets\Scripts\Team.cs" />

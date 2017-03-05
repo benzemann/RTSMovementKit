@@ -32,14 +32,6 @@ public class CameraRTS : MonoBehaviour {
             translation -= Vector3.up * ZoomSpeed * zoomDelta;
         }
         
-        // Start panning camera if zooming in close to the ground or if just zooming out.
-        var pan = camera.transform.eulerAngles.x - zoomDelta * PanSpeed;
-        pan = Mathf.Clamp(pan, PanAngleMin, PanAngleMax);
-        if (zoomDelta < 0 || camera.transform.position.y < (ZoomMax / 2))
-        {
-            camera.transform.eulerAngles = new Vector3(pan, 0, 0);
-        }
-        
         // Move camera with arrow keys
         translation += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
@@ -53,7 +45,7 @@ public class CameraRTS : MonoBehaviour {
         else
         {
             // Move camera if mouse pointer reaches screen borders
-            /*if (Input.mousePosition.x < ScrollArea)
+            if (Input.mousePosition.x < ScrollArea)
             {
                 translation += Vector3.right * -ScrollSpeed * Time.deltaTime;
             }
@@ -71,7 +63,7 @@ public class CameraRTS : MonoBehaviour {
             if (Input.mousePosition.y > Screen.height - ScrollArea)
             {
                 translation += Vector3.forward * ScrollSpeed * Time.deltaTime;
-            }*/
+            }
         }
 
         // Keep camera within level and zoom area

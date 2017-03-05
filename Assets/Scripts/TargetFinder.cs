@@ -17,6 +17,13 @@ public class TargetFinder : MonoBehaviour {
     // Restrict the search for targets to one pr frame.
     private bool hasSearchedInThisFrame;
 
+    public bool GoToAndAttack { get; set; }
+
+    private void Start()
+    {
+        GoToAndAttack = false;
+    }
+
     public GameObject Target {
         get
         {
@@ -32,13 +39,22 @@ public class TargetFinder : MonoBehaviour {
     {
         if(_currentTarget == null && !hasSearchedInThisFrame)
         {
-            if((GetComponent<AgentController>() != null ? GetComponent<AgentController>().IsReady : true))
+            if((GetComponent<AgentController>() != null ? GetComponent<AgentController>().IsReady : true) ||
+                GoToAndAttack)
                 FindTarget();
         } else
         {
             if (GetComponent<Vision>() != null && !GetComponent<Vision>().CanISeeIt(_currentTarget))
             {
-                _currentTarget = null;
+                if (GetComponent<AgentController>() != null)
+                {
+                    if(GetComponent<AgentController>().IsReady)
+                        GetComponent<AgentController>().GoToPos(_currentTarget.transform.position);
+                } else
+                {
+                    _currentTarget = null;
+                }
+                    
             }
         }
     }
