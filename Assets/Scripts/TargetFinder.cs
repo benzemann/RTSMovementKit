@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
 public class TargetFinder : MonoBehaviour {
     [SerializeField, Tooltip("You can search for potential targets using the custom team mechanics."+
         "Just leave target tag empty and set this to the target team, then it will search for all targets"+
@@ -11,12 +12,9 @@ public class TargetFinder : MonoBehaviour {
     private string targetTag;
     [SerializeField, Tooltip("The radius it will look for enemies.")]
     private float searchRadius;
-    [SerializeField, Tooltip("Whether it should always look for enemies. If false, some other scripts must use this component.")]
-    private bool alwaysSearch;
-
 
     private GameObject _currentTarget;
-
+    // Restrict the search for targets to one pr frame.
     private bool hasSearchedInThisFrame;
 
     public GameObject Target {
@@ -32,9 +30,16 @@ public class TargetFinder : MonoBehaviour {
 
     public void Update()
     {
-        if ((alwaysSearch || (GetComponent<AgentController>() != null ? (!GetComponent<AgentController>().IsSearchingForPath && GetComponent<AgentController>().TargetReached) : false) ) && _currentTarget == null && !hasSearchedInThisFrame)
+        if(_currentTarget == null && !hasSearchedInThisFrame)
         {
-            FindTarget();
+            if((GetComponent<AgentController>() != null ? GetComponent<AgentController>().IsReady : true))
+                FindTarget();
+        } else
+        {
+            if (GetComponent<Vision>() != null && !GetComponent<Vision>().CanISeeIt(_currentTarget))
+            {
+                _currentTarget = null;
+            }
         }
     }
 
@@ -52,6 +57,7 @@ public class TargetFinder : MonoBehaviour {
         // Get all potential targets
         GameObject[] potentialTargets;
 
+        // Get all potential targets either by tag or the teammanager
         if(targetTag != "")
         {
             potentialTargets = GameObject.FindGameObjectsWithTag(targetTag);
@@ -67,19 +73,19 @@ public class TargetFinder : MonoBehaviour {
             float distance = Vector3.Distance(this.transform.position, potentialTargets[i].transform.position);
             if(distance < closestDistance && distance <= searchRadius)
             {
-
-                RaycastHit hit;
-                var dir = (potentialTargets[i].transform.position - transform.position).normalized;
-                Ray ray = new Ray(this.transform.position, dir);
-                var layerMask = ~(1 << this.gameObject.layer);
-                if (Physics.Raycast(ray, out hit, 1000f, layerMask))
+                // If this object has a vision component, then check if the potential target is visible
+                if(GetComponent<Vision>() != null)
                 {
-                    if(hit.transform.gameObject == potentialTargets[i])
+                    if (GetComponent<Vision>().CanISeeIt(potentialTargets[i]))
                     {
                         _currentTarget = potentialTargets[i];
                         closestDistance = distance;
-                    }
-                } 
+                    } 
+                } else
+                {
+                    _currentTarget = potentialTargets[i];
+                    closestDistance = distance;
+                }
             } 
         }
     }

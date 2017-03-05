@@ -54,6 +54,7 @@ public class AgentController : MonoBehaviour
     public bool TargetReached { get { return targetReached; } }
     public bool IsMoving { get { return (velocity.magnitude != 0); } }
     public bool IsSearchingForPath { get; set; }
+    public bool IsReady { get { return (!IsSearchingForPath && TargetReached); } }
     #endregion
 
     // Use this for initialization

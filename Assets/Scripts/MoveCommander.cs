@@ -4,9 +4,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(Selectable)), RequireComponent(typeof(AgentController))]
 public class MoveCommander : MonoBehaviour {
-    [SerializeField, Tooltip("The object that will appear when ordering this object to move")]
-    private GameObject groundClickPrefab;
-
     // Update is called once per frame
     void Update () {
         // Check for mouse down and if the gameobject is selected
@@ -21,16 +18,12 @@ public class MoveCommander : MonoBehaviour {
                     // Tell the agent to move to the position
                     GetComponent<AgentController>().GoToPos(hit.point);
 
-                    if (GetComponent<EnemyPursuer>() != null)
-                        GetComponent<EnemyPursuer>().ClearTarget();
-
                     if (GetComponent<TargetFinder>() != null)
                         GetComponent<TargetFinder>().Target = null;
 
                 } else if (hit.transform.gameObject.tag == "Enemy")
                 {
-                    if (GetComponent<EnemyPursuer>() != null)
-                        GetComponent<EnemyPursuer>().ClearTarget();
+
                     if (GetComponent<TargetFinder>() != null)
                         GetComponent<TargetFinder>().Target = null;
                     GetComponent<TargetFinder>().Target = hit.transform.gameObject;
