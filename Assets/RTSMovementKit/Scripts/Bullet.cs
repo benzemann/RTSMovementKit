@@ -6,23 +6,29 @@ public class Bullet : MonoBehaviour {
     GameObject target;
     float speed;
     float damage;
-
+    Vector3 targetPos;
+    Vector3 dir;
+    bool noTarget = false;
     public void Seek(GameObject t, float d, float s)
     {
         target = t;
         damage = d;
         speed = s;
+        targetPos = t.transform.position;
     }
 
 	// Update is called once per frame
 	void Update () {
-        if (target == null)
+        if(target != null)
         {
-            this.gameObject.SetActive(false);
-            return;
+            targetPos = target.transform.position;
+            dir = targetPos - transform.position;
+        } else if(target == null && noTarget == false)
+        {
+            noTarget = true;
+            dir = dir.normalized * 10.0f;
         }
-
-        Vector3 dir = target.transform.position - transform.position;
+        
         float disThisFrame = speed * Time.deltaTime;
 
         if(dir.magnitude <= disThisFrame)
@@ -33,12 +39,12 @@ public class Bullet : MonoBehaviour {
         }
 
         transform.Translate(dir.normalized * disThisFrame, Space.World);
-        transform.LookAt(target.transform.position, Vector3.up);
+        transform.LookAt(targetPos, Vector3.up);
     }
 
     void HitTarget()
     {
-        if (target.GetComponent<Health>() == null)
+        if (target == null || target.GetComponent<Health>() == null)
             return;
 
         target.GetComponent<Health>().Damage(damage);

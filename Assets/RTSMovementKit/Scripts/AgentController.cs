@@ -73,6 +73,10 @@ public class AgentController : MonoBehaviour
 
     }
 
+    private void LateUpdate()
+    {
+        cannotBePushed = false;
+    }
     /// <summary>
     /// Order the agent to go to specific position.
     /// </summary>
@@ -103,6 +107,7 @@ public class AgentController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        
         if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             var p = (this.transform.position - other.transform.position).normalized * 0.025f;
@@ -128,14 +133,15 @@ public class AgentController : MonoBehaviour
     {
         if (NoOfPushers > 0)
             PushingForce /= NoOfPushers;
-
+        if (cannotBePushed)
+            PushingForce = Vector3.zero;
         NoOfPushers = 0;
         //transform.Translate(PushingForce, Space.World);
         
 
         if (velocity != Vector3.zero)
         {
-            Quaternion desiredRotation = Quaternion.LookRotation(velocity);
+            Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z));
             Quaternion restrictedRotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, maxDeltaAngle);
             transform.rotation = restrictedRotation;
         }
@@ -233,7 +239,7 @@ public class AgentController : MonoBehaviour
                     PushingForce += pushForce * pushWeight * Time.deltaTime;
                     NoOfPushers++;
                 }
-                cannotBePushed = false;
+                //cannotBePushed = false;
 
                 if (agent.TargetReached)
                 {

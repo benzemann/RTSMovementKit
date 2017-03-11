@@ -5,12 +5,12 @@ using UnityEngine;
 public class StupidAI : MonoBehaviour {
     [SerializeField, Tooltip("The stupid AI will every 30 seconds tell all idle units to attack this object")]
     private GameObject objectiveTarget;
-    private float timeAtLastCommand = -50.0f;
+    private float timeAtLastCommand = -20.0f;
 	
 	// Update is called once per frame
 	void Update () {
 		
-        if(Time.time - timeAtLastCommand >= 60.0f)
+        if(Time.time - timeAtLastCommand >= 20.0f)
         {
             timeAtLastCommand = Time.time;
             GameObject[] allRobotUnits = TeamManager.Instance.AllEnemyObjects;

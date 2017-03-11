@@ -15,7 +15,11 @@ public class AgentSpawner : MonoBehaviour {
         if(Time.time - timeAtLastSpawn >= spawnRate)
         {
             timeAtLastSpawn = Time.time;
-            Instantiate(agentPrefab, transform.position + new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)), Quaternion.identity);
+            var newAgent = Instantiate(agentPrefab, transform.position, Quaternion.identity) as GameObject;
+            if(newAgent.GetComponent<AgentController>() != null)
+            {
+                newAgent.GetComponent<AgentController>().GoToPos(transform.position + (transform.up * -10f));
+            }
         }
     }
 }
