@@ -16,7 +16,7 @@ public class TargetPursuer : MonoBehaviour {
         if(target != null)
         {
             var dis = Vector3.Distance(target.transform.position, transform.position);
-            if(dis > GetComponent<Damager>().AttackRange && GetComponent<AgentController>().IsReady)
+            if(dis > GetComponent<Damager>().AttackRange && (GetComponent<AgentController>().IsReady))
             {
                 goToTarget = true;
                 targetOldPos = target.transform.position;
@@ -27,12 +27,13 @@ public class TargetPursuer : MonoBehaviour {
         {
             if(target == null)
             {
-                GetComponent<AgentController>().Stop();
+                //GetComponent<AgentController>().Stop();
+                GetComponent<TargetFinder>().GoToAndAttack = true;
                 goToTarget = false;
                 return;
             }
             var dis = Vector3.Distance(target.transform.position, targetOldPos);
-            if(dis > 1f)
+            if(dis > 10f)
             {
                 targetOldPos = target.transform.position;
                 GetComponent<AgentController>().GoToPos(target.transform.position);

@@ -22,13 +22,13 @@ public class Bullet : MonoBehaviour {
         if(target != null)
         {
             targetPos = target.transform.position;
-            dir = targetPos - transform.position;
         } else if(target == null && noTarget == false)
         {
             noTarget = true;
-            dir = dir.normalized * 10.0f;
+            targetPos = targetPos + (dir.normalized * 25.0f);
         }
-        
+        dir = targetPos - transform.position;
+
         float disThisFrame = speed * Time.deltaTime;
 
         if(dir.magnitude <= disThisFrame)

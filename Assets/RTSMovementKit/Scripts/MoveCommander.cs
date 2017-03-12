@@ -28,16 +28,26 @@ public class MoveCommander : MonoBehaviour {
                     GetComponent<AgentController>().GoToPos(hit.point);
                     // Clear target
                     if (GetComponent<TargetFinder>() != null)
+                    {
                         GetComponent<TargetFinder>().Target = null;
+                        GetComponent<TargetFinder>().GoToAndAttack = false;
+                    }
+                        
 
-                } else if (GetComponent<TargetFinder>() != null & 
+
+                }
+                else if (GetComponent<TargetFinder>() != null & 
                     ((enemyTag != "" && hit.transform.gameObject.tag == enemyTag) ||
                     (hit.transform.gameObject.GetComponent<Team>() != null &&
                     hit.transform.gameObject.GetComponent<Team>().GetTeam == enemyTeam)))
                 {
                     GetComponent<AgentController>().Stop();
                     // Set new target
-                    GetComponent<TargetFinder>().Target = hit.transform.gameObject;
+                    if (GetComponent<TargetFinder>() != null)
+                    {
+                        GetComponent<TargetFinder>().Target = hit.transform.gameObject;
+                        GetComponent<TargetFinder>().GoToAndAttack = true;
+                    }
                 }
             }
         }
