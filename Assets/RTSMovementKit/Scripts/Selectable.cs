@@ -9,14 +9,10 @@ public class Selectable : MonoBehaviour {
     [Header("Selection plane variables")]
     [SerializeField, Tooltip("This gameobject will be shown below the gameobject when selected")]
     private GameObject selectionProjectorPrefab;
-    [SerializeField, Tooltip("The selection plane will be instatiated at local (0,0,0) + this offset")]
+    [SerializeField, Tooltip("The selection projector will be instatiated at local (0,0,0) + this offset")]
     private Vector3 offset;
-    [SerializeField, Tooltip("Rotation of the selectionplane")]
-    private Vector3 selectionProjectorOffset;
-    [SerializeField, Tooltip("The size of the selection plane is calculated based on the size of the model + this scale")]
-    private Vector3 scaling;
-    [SerializeField, Tooltip("Defines whether the selection plane should be a square or allowed to be rectangular")]
-    private bool keepSquare;
+    [SerializeField, Tooltip("The rotation of the selection projector")]
+    private Vector3 rotation;
     private GameObject selectionPlane;
     private bool isSelected;
     #endregion
@@ -37,7 +33,7 @@ public class Selectable : MonoBehaviour {
             // If there is no selectionPlane, instantiate one.
             if(selectionPlane == null)
             {
-                selectionPlane = Instantiate(selectionProjectorPrefab, this.transform.position + selectionProjectorOffset, Quaternion.Euler(new Vector3(90.0f,0.0f,0.0f)), this.transform);
+                selectionPlane = Instantiate(selectionProjectorPrefab, this.transform.position + offset, Quaternion.Euler(rotation), this.transform);
             }
             selectionPlane.SetActive(true);
 
